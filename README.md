@@ -1,64 +1,33 @@
-﻿# G1 News Scraping
+# Web Scraping de Notícias do G1
 
-Este é um projeto simples de web scraping desenvolvido em Python para extrair as últimas notícias do site G1 (globo.com). Ele utiliza as bibliotecas requests e BeautifulSoup para coletar informações das páginas web.
+Este código Python coleta as últimas notícias do site G1 (globo.com), utilizando as bibliotecas `requests` e `BeautifulSoup` para extrair informações das páginas web.
 
-## Objetivo
+## Função `get_news(limit=5)`
 
-O objetivo principal deste projeto é fornecer uma ferramenta de scraping para coletar notícias do G1 de maneira automatizada. Esse código pode ser usado como base para projetos mais avançados ou para entender os conceitos básicos de scraping.
+A função `get_news()` realiza o scraping das notícias:
 
-## Como Usar
+### Configuração Inicial:
 
-Para utilizar este projeto, siga os passos abaixo:
+-   Importa as bibliotecas: `requests`, `BeautifulSoup` e `logging`.
+-   Configura o logger para registrar informações e erros durante o scraping.
 
-### Crie e acesse um ambiente virtual
-```bash
-python -m venv .venv
-source .venv/bin/activate
-```
+### Acesso à Página do G1:
 
-### Instalação das Dependências:
+-   Define a URL e cabeçalhos (headers) para simular um navegador.
+-   Envia uma solicitação GET com `requests.get()` e verifica o código de status.
 
-Certifique-se de ter o Python instalado em seu ambiente. Este projeto foi desenvolvido usando Python 3.x.
+### Extração de Notícias:
 
-Utilize o comando abaixo para instalar as dependências necessárias:
+-   Utiliza o `BeautifulSoup` para analisar o HTML e encontrar elementos das notícias.
+-   Extrai título, descrição, link, imagem, autor e texto completo das notícias.
 
-```bash
-pip3 install -r requirements.txt
-```
+### Tratamento de Erros:
 
-### Execução do Scraping:
+-   Utiliza blocos `try` e `except` para lidar com exceções.
+-   Registra detalhes de erros no logger.
 
-Após a instalação das dependências, você pode executar o arquivo `scrapper.py` para iniciar o scraping das notícias.
+### Teste da Função:
 
-```bash
-python3 G1-News/scraper.py
-```
+-   Testa a função `get_news()` obtendo 5 notícias e exibindo os títulos.
 
-### Resultado:
-
-O código irá coletar as últimas notícias do G1, exibindo os títulos das notícias obtidas no console.
-
-## Estrutura de Pasta
-
-A estrutura de pastas do projeto está organizada da seguinte maneira:
-
-```bash
-G1_News_Scraper/
-│
-├── src/
-│ ├── main.py # Arquivo principal onde você inicia o web scraping
-│ └── scraper.py # Arquivo onde a função de scraping (get_news) está definida
-│
-├── requirements.txt # Arquivo que lista todas as dependências do projeto
-└── README.md # Este arquivo, contendo informações sobre o projeto e instruções de uso
-```
-
--   `src/`: Pasta que contém o código fonte do projeto.
--   `requirements.txt`: Lista todas as dependências do projeto para facilitar a instalação.
--   `README.md`: Documentação explicando o projeto, instruções de uso e informações gerais.
-
-## Avisos Importantes
-
--   **Uso Responsável:** Este projeto foi desenvolvido para fins educacionais e de aprendizado. Sempre respeite os termos de serviço dos sites ao realizar web scraping.
-
--   **Limitações e Restrições:** O scraping de sites pode ser contra os termos de serviço de alguns sites. Verifique as políticas de uso e os limites de solicitação do site alvo antes de executar o código.
+Este código é um exemplo simples de web scraping para coletar notícias do G1. Verifique os termos de serviço do site antes de realizar scraping.
