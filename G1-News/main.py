@@ -12,7 +12,7 @@ def display_news(news_list):
             print(f"Link: {article['link']}")
             print(f"Imagem: {article['image']}")
             print(f"Autor: {article['autor']}")
-            print(f"Texto Completo: {article['full_text']}")
+            print(f"Texto Completo: {article['content']}")
             print("=" * 50)
     else:
         print("Nenhuma notícia encontrada.")
