@@ -73,6 +73,7 @@ def get_news_g1(limit):
                     logger.info(f'Notícia {len(news_list)}: {title}')
 
                     if len(news_list) >= limit:
+                        return news_list
                         break
 
             # Acessa o próximo link
@@ -153,13 +154,18 @@ def get_news_metro(limit):
             links = soup.find_all('a', href=True)
 
             for link in links:
-                found_link = str(re.search(r'href="([^"]+)"', str(link)).group(1))
-                if "metropoles" in found_link:
-                    if "radio" and "/author" and "/tag" not in found_link:
-                        if found_link.count('/') >= 4:
-                            if "https" in found_link:
-                                if found_link not in history_link and found_link not in list_link:
-                                    list_link.append(found_link)
+                try:
+                    found_link = str(re.search(r'href="([^"]+)"', str(link)).group(1))
+                except:
+                    found_link = ""
+                
+                if found_link != "":
+                    if "metropoles" in found_link and "bet" not in found_link:
+                        if "radio" not in found_link and "/author" not in found_link and "/tag" not in found_link: 
+                            if found_link.count('/') >= 4:
+                                if found_link.startswith("https"):
+                                    if found_link not in history_link and found_link not in list_link:
+                                        list_link.append(found_link)
 
             # Extraíndo título, conteúdo e descrição
             # --------------------------------------------------
@@ -280,9 +286,9 @@ if __name__ == "__main__":
 
     start = time.time()
     
-    limit = 20000
+    limit = 3500
 
-    fonte = 2
+    fonte = 1
     '''
     1 = G1
     2 = Metropoles
@@ -291,24 +297,22 @@ if __name__ == "__main__":
     if fonte == 1:
         news = get_news_g1(limit)
         
-    if fonte == 2:
+    elif fonte == 2:
         news = get_news_metro(limit)
-        
-    else:
-        news = []
 
     noticias_recuperadas = len(news)
 
+    print(type(news))
+    print(news)
+    
     time.sleep(1)
-
+    
     noticias_recuperadas_clean = news.drop_duplicates(subset='link')
 
     if fonte == 1:
         filename = "g1_noticias_" + str(int(time.time())) + "_" + str(len(noticias_recuperadas_clean)) + ".csv"
-    if fonte == 2:
+    elif fonte == 2:
         filename = "metropoles_noticias_" + str(int(time.time())) + "_" + str(len(noticias_recuperadas_clean)) + ".csv"
-    else:
-        filename = ""
 
     news.to_csv(filename, sep=',', index=False, encoding='utf-8')
 
